@@ -98,7 +98,7 @@ if not os.path.isdir(CUDA_HOME):
 cuda_include_dir = os.path.join(CUDA_HOME, "include")
 cuda_lib_dir = os.path.join(CUDA_HOME, "lib64")
 install_requires.append(
-    "cupy-cuda" + get_cuda_version_from_header(cuda_include_dir)
+    "cupy" #"cupy-cuda" + get_cuda_version_from_header(cuda_include_dir)
 )
 
 CUDF_HOME = os.environ.get(
