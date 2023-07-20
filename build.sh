@@ -165,16 +165,20 @@ fi
 
 if buildAll || hasArg libcudf; then
     if (( ${BUILD_ALL_GPU_ARCH} == 0 )); then
-        CUDF_CMAKE_CUDA_ARCHITECTURES="-DCMAKE_CUDA_ARCHITECTURES=NATIVE"
-        echo "Building for the architecture of the GPU in the system..."
+        CUDF_CMAKE_CUDA_ARCHITECTURES="${CUDF_CMAKE_CUDA_ARCHITECTURES:-NATIVE}"
+        if [[ "$CUDF_CMAKE_CUDA_ARCHITECTURES" == "NATIVE" ]]; then
+            echo "Building for the architecture of the GPU in the system..."
+        else
+            echo "Building for the GPU architecture(s) $CUDF_CMAKE_CUDA_ARCHITECTURES ..."
+        fi
     else
-        CUDF_CMAKE_CUDA_ARCHITECTURES="-DCMAKE_CUDA_ARCHITECTURES=ALL"
+        CUDF_CMAKE_CUDA_ARCHITECTURES="RAPIDS"
         echo "Building for *ALL* supported GPU architectures..."
     fi
 
     cmake -S $REPODIR/cpp -B ${LIB_BUILD_DIR} \
           -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
-          ${CUDF_CMAKE_CUDA_ARCHITECTURES} \
+          -DCMAKE_CUDA_ARCHITECTURES=${CUDF_CMAKE_CUDA_ARCHITECTURES} \
           -DUSE_NVTX=${BUILD_NVTX} \
           -DBUILD_TESTS=${BUILD_TESTS} \
           -DBUILD_BENCHMARKS=${BUILD_BENCHMARKS} \
