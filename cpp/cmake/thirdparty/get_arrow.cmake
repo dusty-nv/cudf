@@ -67,7 +67,7 @@ function(find_and_configure_arrow VERSION BUILD_STATIC ENABLE_S3 ENABLE_ORC ENAB
     # does not have the CUDA driver installed. This must be an env var.
     set(ENV{CUDA_LIB_PATH} "${CUDAToolkit_LIBRARY_DIR}/stubs")
 
-    message("-- installing Arrow ${VERSION}  BUILD_STATIC=${BUILD_STATIC}  ENABLE_S3=${ENABLE_S3}  ENABLE_PYTHON=${ENABLE_PYTHON}  ENABLE_PARQUET=${ENABLE_PARQUET})
+    message("-- installing Arrow ${VERSION}  BUILD_STATIC=${BUILD_STATIC}  ENABLE_S3=${ENABLE_S3}  ENABLE_PYTHON=${ENABLE_PYTHON}  ENABLE_PARQUET=${ENABLE_PARQUET}")
     
     rapids_cpm_find(Arrow ${VERSION}
         GLOBAL_TARGETS arrow_shared arrow_cuda_shared
